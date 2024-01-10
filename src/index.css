@@ -11,3 +11,66 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+nav {
+  padding: 0 1rem;
+}
+
+.cardFlex {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.card .card-image img {
+  height: 249pt;
+}
+
+.card .card-content {
+  height: 150px;
+}
+
+select {
+  padding-left: 8px;
+  background-color: #ffeae27a;
+  border-radius: 16px;
+  display: block;
+  cursor: pointer;
+  margin: auto;
+  width: 90%;
+}
+
+input[type="radio"]:not(:checked), [type="radio"]:checked {
+  position: relative;
+  opacity: 1;
+  pointer-events: fill;
+}
+
+#search {
+  width: fit-content;
+  padding-left: 4%;
+  margin-left: 43%;
+}
+
+.radioBox {
+  padding-top: 1%;
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+label {
+  font-size: 16px;
+  color: black;
+  cursor: pointer;
+}
+
+input[type='radio'] {
+  cursor: pointer;
+}
