@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/gameHubReact/static/css/main.94966e15.css",
+    "main.js": "/gameHubReact/static/js/main.dbffd3ec.js",
+    "index.html": "/gameHubReact/index.html",
+    "main.94966e15.css.map": "/gameHubReact/static/css/main.94966e15.css.map",
+    "main.dbffd3ec.js.map": "/gameHubReact/static/js/main.dbffd3ec.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.94966e15.css",
+    "static/js/main.dbffd3ec.js"
+  ]
+}
