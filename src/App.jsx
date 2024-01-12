@@ -1,51 +1,51 @@
 import './preloader';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Cards } from './components/Cards';
 import { Search } from './components/Search';
 import { Loader } from './components/Loader';
 
-class App extends React.Component {
-	state = {
-		posts: '',
-		search: '',
-		genre: '',
-		platform: '',
-		loading: 'true',
-	};
+function App() {
+	const [posts, statePosts] = useState();
+	const [search, stateSearch] = useState();
+	const [genre, stateGenre] = useState();
+	const [platform, statePlatform] = useState();
+	const [loading, stateLoading] = useState(true);
 
-	componentDidMount() {
-		this.setState({ loading: 'true' });
+	useEffect(() => {
+		stateLoading(true);
 		console.log('mount');
 		fetch('https://api.rawg.io/api/games?key=53b622c599524a3381f791cd01725d0b')
 			.then((res) => res.json())
-			.then((data) => this.setState({ posts: data.results, loading: 'false' }));
-	}
+			.then((data) => {
+				statePosts(data.results);
+				stateLoading(false);
+			});
+	}, []);
 
-	letItClick = () => {
-		this.setState({ loading: 'true' });
-		this.setState({ posts: '' });
-		fetch(`https://api.rawg.io/api/games?key=53b622c599524a3381f791cd01725d0b${this.state.search ? '&search=' + this.state.search : ''}${this.state.genre ? '&genres=' + this.state.genre : ''}${this.state.platform ? '&platforms=' + this.state.platform : ''}`)
+	function letItClick() {
+		stateLoading(true);
+		statePosts('');
+		fetch(`https://api.rawg.io/api/games?key=53b622c599524a3381f791cd01725d0b${search ? '&search=' + search : ''}${genre ? '&genres=' + genre : ''}${platform ? '&platforms=' + platform : ''}`)
 			.then((res) => res.json())
-			.then((data) => this.setState({ posts: data.results, loading: 'false' }));
-	};
-
-	letItChoose = (v) => {
-		console.log(v.target);
-		this.setState({ [v.target.name]: v.target.value });
-	};
-
-	render() {
-		return (
-			<div>
-				<Header />
-				<Search fselect={this.letItChoose} ftype={this.letItChoose} fclick={this.letItClick} />
-				{this.state.loading === 'true' ? <Loader /> : this.state.posts.length !== 0 ? <Cards cards={this.state.posts} /> : <h4>По запросу результатов не найдено</h4>}
-				<Footer />
-			</div>
-		);
+			.then((data) => statePosts(data.results))
+			.then(() => stateLoading(false));
 	}
+
+	let letItChoose = (v) => {
+		console.log(v.target);
+		// setState({ [v.target.name]: v.target.value });
+	};
+
+	return (
+		<div>
+			<Header />
+			<Search fselect={letItChoose} ftype={letItChoose} fclick={letItClick} />
+			{loading === true ? <Loader /> : posts.length > 0 ? <Cards cards={posts} /> : <h4>По запросу результатов не найдено</h4>}
+			<Footer />
+		</div>
+	);
 }
 
 export default App;
