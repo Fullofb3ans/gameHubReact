@@ -25,6 +25,7 @@ function App() {
 	}, []);
 
 	function letItClick() {
+		console.log(platform);
 		stateLoading(true);
 		statePosts('');
 		fetch(`https://api.rawg.io/api/games?key=53b622c599524a3381f791cd01725d0b${search ? '&search=' + search : ''}${genre ? '&genres=' + genre : ''}${platform ? '&platforms=' + platform : ''}`)
@@ -33,15 +34,26 @@ function App() {
 			.then(() => stateLoading(false));
 	}
 
-	let letItChoose = (v) => {
-		console.log(v.target);
-		// setState({ [v.target.name]: v.target.value });
+	let letItChoose = (v, type) => {
+		switch (type) {
+			case 'select':
+				stateGenre(v.target.value);
+				break;
+			case 'radio':
+				statePlatform(v.target.value);
+				break;
+			case 'search':
+				stateSearch(v.target.value);
+				break;
+			default:
+				break;
+		}
 	};
 
 	return (
 		<div>
 			<Header />
-			<Search fselect={letItChoose} ftype={letItChoose} fclick={letItClick} />
+			<Search fselect={letItChoose} fclick={letItClick} />
 			{loading === true ? <Loader /> : posts.length > 0 ? <Cards cards={posts} /> : <h4>По запросу результатов не найдено</h4>}
 			<Footer />
 		</div>
