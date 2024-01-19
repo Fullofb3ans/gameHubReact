@@ -1,5 +1,5 @@
 import './preloader';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Cards } from './components/Cards';
@@ -8,10 +8,34 @@ import { Loader } from './components/Loader';
 
 function App() {
 	const [posts, statePosts] = useState();
-	const [search, stateSearch] = useState();
-	const [genre, stateGenre] = useState();
-	const [platform, statePlatform] = useState();
 	const [loading, stateLoading] = useState(true);
+
+	const newReducer = (state, action) => {
+		console.log(action.type.payload);
+		console.log(action.type.type);
+		switch (action.type.type) {
+			case 'select':
+				return {
+					...state,
+					genre: action.type.payload,
+				};
+			case 'radio':
+				return {
+					...state,
+					platform: action.type.payload,
+				};
+			case 'search':
+				return {
+					...state,
+					search: action.type.payload,
+				};
+			default:
+				console.log('slomano');
+				break;
+		}
+	};
+
+	const [{ genre, platform, search }, dispatch] = useReducer(newReducer, { genre: '', platform: '', search: '' });
 
 	useEffect(() => {
 		stateLoading(true);
@@ -34,26 +58,10 @@ function App() {
 			.then(() => stateLoading(false));
 	}
 
-	let letItChoose = (v, type) => {
-		switch (type) {
-			case 'select':
-				stateGenre(v.target.value);
-				break;
-			case 'radio':
-				statePlatform(v.target.value);
-				break;
-			case 'search':
-				stateSearch(v.target.value);
-				break;
-			default:
-				break;
-		}
-	};
-
 	return (
 		<div>
 			<Header />
-			<Search fselect={letItChoose} fclick={letItClick} />
+			<Search fselect={(type) => dispatch({ type: type })} fclick={letItClick} />
 			{loading === true ? <Loader /> : posts.length > 0 ? <Cards cards={posts} /> : <h4>По запросу результатов не найдено</h4>}
 			<Footer />
 		</div>

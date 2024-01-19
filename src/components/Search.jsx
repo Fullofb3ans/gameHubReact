@@ -1,7 +1,7 @@
 export function Search(props) {
 	return (
 		<div className="input-field col s6">
-			<select name="genre" onChange={(v) => props.fselect(v, 'select')}>
+			<select name="genre" onChange={(v) => props.fselect({ payload: v.target.value, type: 'select' })}>
 				<option value="">Выберите жанр</option>
 				<option value="action">Экшен</option>
 				<option value="indie">Инди</option>
@@ -19,7 +19,7 @@ export function Search(props) {
 				<option value="family">Семейные</option>
 			</select>
 
-			<div className="radioBox" onChange={(v) => props.fselect(v, 'radio')}>
+			<div className="radioBox" onChange={(v) => props.fselect({ payload: v.target.value, type: 'radio' })}>
 				<label>
 					<input type="radio" name="platform" value="4" />
 					PC
@@ -46,7 +46,7 @@ export function Search(props) {
 				</label>
 			</div>
 
-			<input onKeyUp={(v) => props.fselect(v, 'search')} name="search" id="search" type="text" className="validate" placeholder="Поиск..." />
+			<input onKeyUp={(v) => props.fselect({ payload: v.target.value, type: 'search' })} name="search" id="search" type="text" className="validate" placeholder="Поиск..." />
 
 			<button onClick={props.fclick} className="btn-floating btn-large waves-effect waves-light purple">
 				<i className="material-icons">location_searching</i>
