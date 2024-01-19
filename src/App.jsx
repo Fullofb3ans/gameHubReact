@@ -11,23 +11,23 @@ function App() {
 	const [loading, stateLoading] = useState(true);
 
 	const newReducer = (state, action) => {
-		console.log(action.type.payload);
-		console.log(action.type.type);
-		switch (action.type.type) {
+		console.log(action.type);
+		console.log(action.payload);
+		switch (action.type) {
 			case 'select':
 				return {
 					...state,
-					genre: action.type.payload,
+					genre: action.payload,
 				};
 			case 'radio':
 				return {
 					...state,
-					platform: action.type.payload,
+					platform: action.payload,
 				};
 			case 'search':
 				return {
 					...state,
-					search: action.type.payload,
+					search: action.payload,
 				};
 			default:
 				console.log('slomano');
@@ -61,7 +61,7 @@ function App() {
 	return (
 		<div>
 			<Header />
-			<Search fselect={(type) => dispatch({ type: type })} fclick={letItClick} />
+			<Search fselect={(type) => dispatch(type)} fclick={letItClick} />
 			{loading === true ? <Loader /> : posts.length > 0 ? <Cards cards={posts} /> : <h4>По запросу результатов не найдено</h4>}
 			<Footer />
 		</div>
