@@ -29,6 +29,11 @@ function App() {
 					...state,
 					search: action.payload,
 				};
+			case 'click':
+				return {
+					...state,
+					search: action.payload,
+				};
 			default:
 				console.log('slomano');
 				break;
